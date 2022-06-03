@@ -11,10 +11,8 @@ import ru.kata.spring.boot_security.demo.model.User;
 @RequestMapping("/user")
 public class ProfileController {
 
-
     @GetMapping
-    public String userProfile(@AuthenticationPrincipal User user, Model model) {
-        model.addAttribute("user",user);
+    public String userProfile(Model model) {
         return "user";
     }
 }

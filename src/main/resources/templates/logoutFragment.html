@@ -1,10 +1,25 @@
 <!DOCTYPE html >
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
 <body>
     <div th:fragment="logoutmenu">
-        <br/>
-        <br/>
-        <a th:href="@{/logout}" th:text="Logout"></a>
+        <div class="container-fluid bg-dark text-white">
+            <div class="row">
+                <div class="col">
+                    <h5><span class="font-weight-bold" th:text="${currentUser.username}"></span> with roles: <span th:each="role : ${currentUser.getAuthorities()}">
+                        <span th:text="${role.getAuthority()} "></span>
+                    </span>
+                    </h5>
+                </div>
+                <div class="col-1 text-right">
+                    <a th:href="@{/logout}" class="text-secondary" th:text="Logout"></a>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

@@ -1,16 +1,19 @@
 package ru.kata.spring.boot_security.demo.model;
 
+import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", unique = true, nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String name;
@@ -19,7 +22,9 @@ public class User implements UserDetails {
 
     private byte age;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE,
+            org.hibernate.annotations.CascadeType.PERSIST})
     private Set<Role> roles;
 
     private String password;
@@ -67,6 +72,22 @@ public class User implements UserDetails {
         this.age = age;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public void setPassword(String password) {
+        this.password = "{noop}" + password;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
@@ -100,6 +121,23 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return !disabled;
+    }
+
+    public void addRole(Role role) {
+        this.roles.add(role);
+        role.getUsers().add(this);
+    }
+
+    public void removeRole(Role role) {
+        this.roles.remove(role);
+        role.getUsers().remove(this);
+    }
+
+    public void removeRoles() {
+        for (Role role:
+                this.getRoles()) {
+            role.getUsers().remove(this);
+        }
     }
 }
 

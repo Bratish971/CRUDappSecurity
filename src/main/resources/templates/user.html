@@ -1,14 +1,58 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Profile information</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>User page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<p><span th:text="${user.username}"></span>, welcome spring boot security page!</p>
-<p th:text="${user.name}"></p>
-<p th:text="${user.lastName}"></p>
-<p th:text="${user.age}"></p>
-
 <div th:insert="logoutFragment::logoutmenu"></div>
+<div class="container-fluid pl-0 mh-100">
+    <div class="row">
+        <div class="col-2 pr-0 mt-3">
+            <div th:each="role : ${currentUser.getAuthorities()}">
+                <span th:if="${role.getAuthority() == 'ADMIN'}">
+                    <p class="mb-0">
+                        <a class="btn btn-link btn-lg btn-block text-left" th:href="@{/admin}" role="button">Admin</a>
+                    </p>
+                </span>
+            </div>
+            <p><a class="btn btn-primary btn-lg btn-block text-left" th:href="@{/user}" role="button">User</a></p>
+        </div>
+        <div class="col bg-light">
+            <h1 class="pt-3 text-left">User information-page</h1>
+            <div class="container border"><h4>About user</h4></div>
+            <div class="container bg-white border mb-5">
+                <table class="table table-striped mt-3">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Role</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td th:text="${currentUser.id}"></td>
+                            <td th:text="${currentUser.name}"></td>
+                            <td th:text="${currentUser.lastName}"></td>
+                            <td th:text="${currentUser.age}"></td>
+                            <td th:text="${currentUser.username}"></td>
+                            <td>
+                                <div th:each="role : ${currentUser.getAuthorities()}">
+                                    <span th:text="${role.getAuthority()} "></span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
