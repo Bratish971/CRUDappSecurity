@@ -10,9 +10,7 @@
         <div class="container-fluid bg-dark text-white">
             <div class="row">
                 <div class="col">
-                    <h5><span class="font-weight-bold" th:text="${currentUser.username}"></span> with roles: <span th:each="role : ${currentUser.getAuthorities()}">
-                        <span th:text="${role.getAuthority()} "></span>
-                    </span>
+                    <h5><span id="currentUserName" class="font-weight-bold"></span> with roles: <span id="currentUserRoles"></span>
                     </h5>
                 </div>
                 <div class="col-1 text-right">
@@ -20,6 +18,8 @@
                 </div>
             </div>
         </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="/logoutFragmentScript.js"></script>
     </div>
 </body>
 </html>

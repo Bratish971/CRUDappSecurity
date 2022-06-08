@@ -1,5 +1,7 @@
 package ru.kata.spring.boot_security.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -22,6 +24,7 @@ public class Role implements GrantedAuthority {
             joinColumns = { @JoinColumn(name = "role_id") },
             inverseJoinColumns = { @JoinColumn(name = "user_id") }
     )
+    @JsonIgnore
     private Set<User> users;
 
     private String authority;

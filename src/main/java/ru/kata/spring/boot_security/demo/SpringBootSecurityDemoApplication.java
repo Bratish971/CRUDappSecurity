@@ -19,7 +19,7 @@ public class SpringBootSecurityDemoApplication {
                 = new FilterRegistrationBean<>();
 
         registrationBean.setFilter(new HiddenHttpMethodFilter());
-        registrationBean.addUrlPatterns("/admin/*");
+        registrationBean.addUrlPatterns("/admin/*","/admin-rest/*");
         registrationBean.setOrder(2);
 
         return registrationBean;

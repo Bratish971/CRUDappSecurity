@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.Cascade;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,8 +24,7 @@ public class User implements UserDetails {
     private byte age;
 
     @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
-    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE,
-            org.hibernate.annotations.CascadeType.PERSIST})
+    @Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE})
     private Set<Role> roles;
 
     private String password;
@@ -81,7 +81,7 @@ public class User implements UserDetails {
     }
 
     public void setPassword(String password) {
-        this.password = "{noop}" + password;
+        this.password = password.contains("{noop}") ? password :"{noop}" + password;
     }
 
     public void setUsername(String username) {
