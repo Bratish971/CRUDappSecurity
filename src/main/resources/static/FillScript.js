@@ -65,7 +65,7 @@ $(async function () {
                 username: editForm.elements['usernameModalJS'].value,
             }
             let response = await fetch('/admin-rest', {
-                method: 'PATCH',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8',
                 },

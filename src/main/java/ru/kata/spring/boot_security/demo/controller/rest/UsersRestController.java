@@ -46,7 +46,7 @@ public class UsersRestController {
         return user;
     }
 
-    @PatchMapping()
+    @PutMapping()
     public User updateUser(@RequestBody User user) {
 
         userService.findById(user.getId()).removeRoles();
